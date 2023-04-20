@@ -33,7 +33,7 @@ SECRET_KEY=os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['port-0-balance-pjt-1maxx2algohl5h4.sel3.cloudtype.app']
+ALLOWED_HOSTS = ['port-0-balance-pjt-1maxx2algohl5h4.sel3.cloudtype.app', '127.0.0.1',]
 
 
 # Application definition
@@ -65,7 +65,7 @@ ROOT_URLCONF = 'crud.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
