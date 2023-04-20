@@ -5,8 +5,8 @@ from django.conf import settings
 class Post(models.Model):
     title = models.CharField(max_length=80)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    choose1_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='choose1_post')
-    choose1_content = models.TextField()
-    choose2_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='choose2_post')
-    choose2_content = models.TextField()
+    select1_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='select1_post')
+    select1_content = models.TextField()
+    select2_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='select2_post')
+    select2_content = models.TextField()
     

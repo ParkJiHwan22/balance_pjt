@@ -6,14 +6,14 @@
     <thead>
       <tr class="table-secondary">
         <th scope="col" style="width: 10%;" class="text-center">#</th>
-        <th scope="col" class="text-center">제목</th>
+        <th scope="col" class="text-center">고르기</th>
       </tr>
     </thead>
     <tbody>
       {% for post in posts %}
       <tr>
         <td class="text-center">{{ post.pk }}</td>
-        <!-- <td class="text-center" onclick="location.href='{% url 'posts:detail' post.pk %}'" style="cursor: pointer;">{{ post.title }}</td> -->
+        <td class="text-center" onclick="location.href='{% url 'posts:detail' post.pk %}'" style="cursor: pointer;">{{ post.select1_content }} or {{ post.select2_content }}</td>
       </tr>
       {% endfor %}
     </tbody>

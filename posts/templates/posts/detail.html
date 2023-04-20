@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container w-50">
+  <div class="d-flex align-items-center">
+    <h1 class="text-center flex-grow-1">{{ post.title }}</h1>
+    <p class="fs-6 text-end m-0 me-3">{{ post.user }}</p>
+  </div>
+  <hr class="mt-0 mb-3">
+
+  <div class="mb-3" style="word-wrap: break-word;">
+    <form action="{% url 'posts:answer' post.pk post.select1_content %}" method="POST">
+      {% csrf_token %}
+        <input type="submit" value="{{ post.select1_content }} - {{ post.select1_users.count }}">
+    </form>
+  </div>
+
+  <div class="mb-3" style="word-wrap: break-word;">
+    <form action="{% url 'posts:answer' post.pk post.select2_content %}" method="POST">
+      {% csrf_token %}
+        <input type="submit" value="{{ post.select2_content }} - {{ post.select2_users.count }}">
+    </form>
+  </div>
+  
+  <hr class="mt-0 mb-3">
+  <div class="d-flex justify-content-between">
+    <a href="{% url 'posts:index' %}" class="btn btn-outline-success">뒤로가기</a>
+    <div class="d-flex justify-content-between">
+    </div>
+  </div>
+</div>
+{% endblock content %}
