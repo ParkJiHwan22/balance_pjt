@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="container w-50">
@@ -7,6 +8,24 @@
     <p class="fs-6 text-end m-0 me-3">{{ post.pk }}</p>
   </div>
   <hr class="mt-0 mb-3">
+  <!-- 추가한 부분 -->
+  <div>
+  {% if post.image_1 %}
+    <img src="{{ post.image_1.url }}" alt="img" width="300px;">
+  {% else %}
+    <img src="{% static 'no-image.png' %}" alt="no-img" width="300px;">
+  {% endif %}
+  </div>
+
+  <div>
+    {% if post.image_2 %}
+      <img src="{{ post.image_2.url }}" alt="img" width="300px;">
+    {% else %}
+      <img src="{% static 'no-image.png' %}" alt="no-img" width="300px;">
+    {% endif %}
+    </div>
+
+
   <div class="mb-3" style="word-wrap: break-word;">
     {{ post.content }}
   </div>

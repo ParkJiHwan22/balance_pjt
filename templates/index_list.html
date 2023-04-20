@@ -1,0 +1,12 @@
+{% load static %}
+{% for post in posts %}
+<div class="d-flex align-items-center my-4">
+  <div class="ms-3">
+    <p>후기 번호 - {{ post.pk }}</p>
+    <a href="{% url 'posts:detail' post.pk %}">[Detail]</a>
+  </div>
+</div>
+{% empty %}
+<p class="text-center text-secondary">아직 작성한 후기가 없습니다</p>
+{% endfor %}
+<hr>
