@@ -24,8 +24,8 @@
   {% endif %}
 
   <h3>{{ person.username }}가 작성한 모든 게시글</h3>
-  {% for article in person.article_set.all %}
-    <div>{{ article.title }}</div>
+  {% for post in person.posts_set.all %}
+    <div>{{ post.content }}</div>
   {% endfor %}
 
   <hr>
@@ -38,7 +38,14 @@
   <hr>
   
   <h3>{{ person.username }}가 좋아요를 누른 모든 게시글</h3>
-  {% for article in person.like_articles.all %}
+  {% for post in person.like_posts.all %}
     <div>{{ article.title }}</div>
   {% endfor %}
+
+  <hr>
+  <div class="d-flex justify-content-between">
+    <a href="{% url 'posts:index' %}" class="btn btn-outline-success">뒤로가기</a>
+    <div class="d-flex justify-content-between">
+    </div>
+  </div>
 {% endblock content %}
