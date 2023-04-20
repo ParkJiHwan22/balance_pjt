@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container m-auto">
+  <table class="table table-borderless table-hover">
+    <thead>
+      <tr class="table-secondary">
+        <th scope="col" style="width: 10%;" class="text-center">#</th>
+        <th scope="col" class="text-center">제목</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for post in posts %}
+      <tr>
+        <td class="text-center">{{ post.pk }}</td>
+        <!-- <td class="text-center" onclick="location.href='{% url 'posts:detail' post.pk %}'" style="cursor: pointer;">{{ post.title }}</td> -->
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock content %}
