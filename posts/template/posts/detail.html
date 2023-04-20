@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container w-50">
+  <div class="d-flex align-items-center">
+    <h1 class="text-center flex-grow-1">{{ post.title }}</h1>
+    <p class="fs-6 text-end m-0 me-3">{{ post.pk }}</p>
+  </div>
+  <hr class="mt-0 mb-3">
+  <div class="mb-3" style="word-wrap: break-word;">
+    {{ post.content }}
+  </div>
+  <div class="d-flex justify-content-between">
+    <a href="{% url 'posts:index' %}" class="btn btn-outline-success">뒤로가기</a>
+    <div class="d-flex justify-content-between">
+    </div>
+  </div>
+</div>
+{% endblock content %}

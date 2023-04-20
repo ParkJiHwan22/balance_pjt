@@ -41,6 +41,7 @@ ALLOWED_HOSTS = ['port-0-balance-pjt-1maxx2algohl5h4.sel3.cloudtype.app', '127.0
 INSTALLED_APPS = [
     'articles',
     'accounts',
+    'posts',
     'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',
