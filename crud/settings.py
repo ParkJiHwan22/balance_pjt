@@ -131,9 +131,20 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / 'static'
+]
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.User' # 기본 값 'auth.User'
+
+
+# media
+
+MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/media/'

@@ -9,4 +9,6 @@ class Post(models.Model):
     select1_content = models.TextField()
     select2_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='select2_post')
     select2_content = models.TextField()
+    image_1 = models.ImageField(blank=True)
+    image_2 = models.ImageField(blank=True)
     
