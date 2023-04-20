@@ -13,10 +13,14 @@
         <input type="submit" value="회원탈퇴">
       </form>
       <a href="{% url 'accounts:update' %}">회원정보수정</a>
+      <br>
+      <div class="d-flex justify-content-center">
+        <a href="{% url 'posts:create' %}"><button type="submit" class="btn btn-outline-primary">밸런스 게임 생성</button></a>
+      </div>
     {% else %}
       <a href="{% url 'accounts:login' %}">Login</a>
       <a href="{% url 'accounts:signup' %}">Signup</a>
-    {% endif %}
+  {% endif %}
   
   
   <div class="container m-auto">
