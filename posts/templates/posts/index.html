@@ -1,22 +1,40 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container m-auto">
-  <table class="table table-borderless table-hover">
-    <thead>
-      <tr class="table-secondary">
-        <th scope="col" style="width: 10%;" class="text-center">#</th>
-        <th scope="col" class="text-center">고르기</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for post in posts %}
-      <tr>
-        <td class="text-center">{{ post.pk }}</td>
-        <td class="text-center" onclick="location.href='{% url 'posts:detail' post.pk %}'" style="cursor: pointer;">{{ post.select1_content }} or {{ post.select2_content }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
+  {% if request.user.is_authenticated %}
+      <h3>안녕하세요, {{ user }} 님!</h3>
+      <a href="{% url 'accounts:profile' user.username %}">내 프로필</a>
+      <form action="{% url 'accounts:logout' %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Logout">
+      </form>
+      <form action="{% url 'accounts:delete' %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="회원탈퇴">
+      </form>
+      <a href="{% url 'accounts:update' %}">회원정보수정</a>
+    {% else %}
+      <a href="{% url 'accounts:login' %}">Login</a>
+      <a href="{% url 'accounts:signup' %}">Signup</a>
+    {% endif %}
+  
+  
+  <div class="container m-auto">
+    <table class="table table-borderless table-hover">
+      <thead>
+        <tr class="table-secondary">
+          <th scope="col" style="width: 10%;" class="text-center">#</th>
+          <th scope="col" class="text-center">고르기</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for post in posts %}
+        <tr>
+          <td class="text-center">{{ post.pk }}</td>
+          <td class="text-center" onclick="location.href='{% url 'posts:detail' post.pk %}'" style="cursor: pointer;">{{ post.select1_content }} or {{ post.select2_content }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 {% endblock content %}
