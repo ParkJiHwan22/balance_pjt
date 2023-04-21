@@ -1,26 +1,34 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  {% if request.user.is_authenticated %}
-      <h3>안녕하세요, {{ user }} 님!</h3>
-      <a href="{% url 'accounts:profile' user.username %}">내 프로필</a>
+  <div class="container m-auto mt-5">  
+    {% if request.user.is_authenticated %}
+      <h3>안녕하세요, <strong>{{ user }}</strong> 님!</h3>
+      <a href="{% url 'accounts:profile' user.username %}"><button type="submit" class="btn btn-outline-primary">내 프로필</button></a>
       <form action="{% url 'accounts:logout' %}" method="POST">
         {% csrf_token %}
         <input type="submit" value="Logout">
       </form>
-      <form action="{% url 'accounts:delete' %}" method="POST">
-        {% csrf_token %}
-        <input type="submit" value="회원탈퇴">
-      </form>
+      <div class="mb-3">
+        <form action="{% url 'accounts:delete' %}" method="POST" class="d-flex justify-content-between">
+          {% csrf_token %}
+          <input type="submit" class="btn btn-outline-warning btn-sm" value="회원탈퇴">
+        </form>
+      </div>
       <a href="{% url 'accounts:update' %}">회원정보수정</a>
       <br>
       <div class="d-flex justify-content-center">
-        <a href="{% url 'posts:create' %}"><button type="submit" class="btn btn-outline-primary">밸런스 게임 생성</button></a>
+        <a href="{% url 'posts:create' %}"><button type="submit" class="btn btn-primary">밸런스 게임 생성</button></a>
       </div>
+      <br>
     {% else %}
-      <a href="{% url 'accounts:login' %}">Login</a>
-      <a href="{% url 'accounts:signup' %}">Signup</a>
-  {% endif %}
+      <div class="d-flex justify-content-end">
+        <a href="{% url 'accounts:login' %}"><button type="submit" class="btn btn-outline-primary">Login</button></a>
+        <a href="{% url 'accounts:signup' %}"><button type="submit" class="btn btn-outline-success">회원가입</button></a>
+      </div>
+      <br>
+    {% endif %}
+  </div>
   
   
   <div class="container m-auto">
