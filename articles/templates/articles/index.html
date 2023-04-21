@@ -3,12 +3,6 @@
 
 {% block content %}
   {% if request.user.is_authenticated %}
-    <h3>안녕하세요, {{ user }} 님!</h3>
-    <a href="{% url 'accounts:profile' user.username %}">내 프로필</a>
-    <form action="{% url 'accounts:logout' %}" method="POST">
-      {% csrf_token %}
-      <input type="submit" value="Logout">
-    </form>
     <form action="{% url 'accounts:delete' %}" method="POST">
       {% csrf_token %}
       <input type="submit" value="회원탈퇴">
