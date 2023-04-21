@@ -11,6 +11,8 @@ class Post(models.Model):
     select2_content = models.TextField()
     image_1 = models.ImageField(blank=True)
     image_2 = models.ImageField(blank=True)
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_posts')
+    emote_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='emote_posts', through='Emote_post')
     
 class Comment_post(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
@@ -18,6 +20,8 @@ class Comment_post(models.Model):
     content = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_comment_posts')
+
 
 class Emote_post(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
