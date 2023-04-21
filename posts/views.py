@@ -11,9 +11,9 @@ def index(request):
     return render(request, 'posts/index.html', context)
 
 EMOTIONS = [
-    {'label': '재밌어요', 'value': 1},
-    {'label': '싫어요', 'value': 2},
-    {'label': '화나요', 'value': 3},
+    {'label': '😁', 'value': 1},
+    {'label': '☹', 'value': 2},
+    {'label': '😡', 'value': 3},
 ]
 
 
