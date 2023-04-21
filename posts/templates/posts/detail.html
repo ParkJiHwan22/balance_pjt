@@ -32,18 +32,18 @@
     <div class="d-flex justify-content-around">
       <div class="d-flex flex-column align-items-center col-4">
         {% if post.image_1 %}
-          <img src="{{ post.image_1.url }}" alt="img" width='100%'>
+        <form action="{% url 'posts:answer' post.pk post.select1_content %}" method="POST">
+          {% csrf_token %}
+          <button type="submit"><img src="{{ post.image_1.url }}" alt="img" width='100%'></button>
+        </form>
         {% else %}
           <img src="{% static 'no-image.png' %}" alt="no-img" width='100%'>
         {% endif %}  
-        <div class="my-3" style="word-wrap: break-word;">
-          <form action="{% url 'posts:answer' post.pk post.select1_content %}" method="POST">
-            {% csrf_token %}
-              <input type="submit" value="{{ post.select1_content }} - {{ post.select1_users.count }}">
-          </form>
+        <div class="my-3" style="word-wrap: break-word;">         
+          <input type="submit" value="{{ post.select1_content }} - {{ post.select1_users.count }}" class="btn btn-outline-primary">  
         </div>
       </div>
-
+      
       <div class='d-flex align-items-center mb-5'>
         <h1>vs</h1>
       </div>
@@ -51,15 +51,15 @@
 
       <div class="d-flex flex-column align-items-center col-4">
         {% if post.image_2 %}
-          <img src="{{ post.image_2.url }}" alt="img" width='100%'>
+        <form action="{% url 'posts:answer' post.pk post.select2_content %}" method="POST">
+          {% csrf_token %}
+          <button type="submit"><img src="{{ post.image_2.url }}" alt="img" width='100%'></button>
+        </form>
         {% else %}
             <img src="{% static 'no-image.png' %}" alt="no-img" width='100%'>
         {% endif %}
-        <div class="my-3" style="word-wrap: break-word;">
-          <form action="{% url 'posts:answer' post.pk post.select2_content %}" method="POST">
-            {% csrf_token %}
-              <input type="submit" value="{{ post.select2_content }} - {{ post.select2_users.count }}">
-          </form>
+        <div class="my-3" style="word-wrap: break-word;">      
+              <input type="submit" value="{{ post.select2_content }} - {{ post.select2_users.count }}" class="btn btn-outline-primary">
         </div>  
       </div>
     </div>
