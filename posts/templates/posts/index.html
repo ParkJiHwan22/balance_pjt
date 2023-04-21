@@ -4,7 +4,7 @@
 
 
   <div class="container m-auto">
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center my-4">
       <a href="{% url 'posts:create' %}"><button type="submit" class="btn btn-primary">밸런스 게임 생성</button></a>
     </div>
     <br>
@@ -13,6 +13,7 @@
         <tr class="table-secondary">
           <th scope="col" style="width: 10%;" class="text-center">#</th>
           <th scope="col" class="text-center">고르기</th>
+          <th scope="col" class="text-center">작성자</th>
         </tr>
       </thead>
       <tbody>
@@ -20,6 +21,7 @@
         <tr>
           <td class="text-center">{{ post.pk }}</td>
           <td class="text-center" onclick="location.href='{% url 'posts:detail' post.pk %}'" style="cursor: pointer;">{{ post.select1_content }} or {{ post.select2_content }}</td>
+          <td class="text-center">{{ post.user }}</td>
         </tr>
         {% endfor %}
       </tbody>
