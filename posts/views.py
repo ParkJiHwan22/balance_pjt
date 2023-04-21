@@ -119,7 +119,7 @@ def likes(request, post_pk):
 @login_required
 def emotes(request, post_pk, emotion):
     post = Post.objects.get(pk=post_pk)
-    filter_query = Emote.objects.filter(
+    filter_query = Emote_post.objects.filter(
         post=post,
         user=request.user,
         emotion=emotion,
