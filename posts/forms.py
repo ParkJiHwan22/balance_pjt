@@ -10,4 +10,3 @@ class Comment_postForm(forms.ModelForm):
     class Meta:
         model = Comment_post
         fields = ('content',)
-        widgets = {'content': forms.TextInput}

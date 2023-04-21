@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Post, Comment_post, Emote_post
-from .forms import PostForm, Commen_postForm
+from .forms import PostForm, Comment_postForm
 
 def index(request):
     posts = Post.objects.all()
@@ -43,9 +43,9 @@ def detail(request, post_pk):
     for emotion in EMOTIONS:
         label = emotion['label']
         value = emotion['value']
-        count = Emote.objects.filter(post=post, emotion=value).count()
+        count = Emote_post.objects.filter(post=post, emotion=value).count()
         if request.user.is_authenticated:
-            exist = Emote.objects.filter(post=post, emotion=value, user=request.user)
+            exist = Emote_post.objects.filter(post=post, emotion=value, user=request.user)
         else:
             exist = None
         emotions.append(
@@ -84,12 +84,15 @@ def comment_create(request, post_pk):
     comment_post_form = Comment_postForm(request.POST)
     if comment_post_form.is_valid():
         comment_post = comment_post_form.save(commit=False)
-        comment_post.user = request.user
         comment_post.post = post
+        comment_post.user = request.user
         comment_post.save()
-
-    return redirect('posts:detail', post.pk)
-
+        return redirect('posts:detail', post.pk)
+    context = {
+        'post': post,
+        'comment_post_form': comment_post_form,
+    }
+    return render(request, 'posts/detail.html', context)
 
 @login_required
 def comment_delete(request, post_pk, comment_post_pk):
