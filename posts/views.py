@@ -52,3 +52,59 @@ def answer(request, post_pk, answer):
             elif answer == post.select2_content:
                 post.select2_users.add(user)
     return redirect('posts:detail', post_pk)
+
+@login_required
+def comment_create(request, post_pk):
+    post = Post.objects.get(pk=post_pk)
+    comment_post_form = Comment_postForm(request.POST)
+    if comment_form.is_valid():
+        comment_post = comment_post_form.save(commit=False)
+        comment_post.user = request.user
+        comment_post.post = post
+        comment_post.save()
+
+    return redirect('posts:detail', post.pk)
+
+
+@login_required
+def comment_delete(request, post_pk, comment_post_pk):
+    comment_post = Comment_post.objects.get(pk=comment_post_pk)
+    if request.user == comment_post.user:
+        comment_post.delete()
+
+    return redirect('posts:detail', post_pk)
+
+
+@login_required
+def likes(request, post_pk):
+    post = Post.objects.get(pk=post_pk)
+    if post.like_users.filter(pk=request.user.pk).exists():
+        post.like_users.remove(request.user)
+    else:
+        post.like_users.add(request.user)
+    return redirect('posts:index')
+
+
+@login_required
+def emotes(request, post_pk, emotion):
+    post = Post.objects.get(pk=post_pk)
+    filter_query = Emote.objects.filter(
+        post=post,
+        user=request.user,
+        emotion=emotion,
+    )
+    if filter_query.exists():
+        filter_query.delete()
+    else:
+        Emote.objects.create(post=post, user=request.user, emotion=emotion)
+
+    return redirect('posts:detail', post_pk)
+
+@login_required
+def comment_likes(request, post_pk, comment_post_pk):
+    comment_post = Comment_post.objects.get(pk=comment_post_pk)
+    if request.user in comment_post.like_users.all():
+        comment_post.like_users.remove(request.user)
+    else:
+        comment_post.like_users.add(request.user)
+    return redirect('posts:detail', post_pk)
