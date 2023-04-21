@@ -44,12 +44,28 @@
         </div>  
       </div>
     </div>
+  
+    
+
+   
+
+
+
+    <hr class="mt-0 mb-3">
+    <div class="d-flex justify-content-between">
+      <a href="{% url 'posts:index' %}" class="btn btn-outline-success">뒤로가기</a>
+      <div class="d-flex justify-content-between">
+      </div>
+    </div>
+  </div>
+
+
   <div class="container">  
-  <form action="{% url 'posts:comment_create' post.pk %}" method="post">
-      {% csrf_token %}
-      {{ comment_post_form.as_p }}
-  <input type="submit" value="댓글 작성">
-  </form>
+    <form action="{% url 'posts:comment_create' post.pk %}" method="post">
+        {% csrf_token %}
+        {{ comment_post_form.as_p }}
+    <input type="submit" value="댓글 작성">
+    </form>
   </div>  
   {% for comment_post in comment_posts %}
   <div>
@@ -78,17 +94,25 @@
   </div>
   <hr>
 {% endfor %}
-    
-
-   
-
-
-
-    <hr class="mt-0 mb-3">
-    <div class="d-flex justify-content-between">
-      <a href="{% url 'posts:index' %}" class="btn btn-outline-success">뒤로가기</a>
-      <div class="d-flex justify-content-between">
-      </div>
+{% for emotion in emotions %}
+    <div>
+      {% if request.user.is_authenticated %}
+      {{emotion.queryset}}
+        <form action="{% url 'posts:emotes' post.pk emotion.value %}" method="POST">
+          {% csrf_token %}
+          {% if emotion.exist %}
+            <input type="submit" value="{{emotion.label}} 취소">
+          {% else %}
+            <input type="submit" value="{{emotion.label}}">
+          {% endif %}
+        </form>
+      {% else %}
+        <button disabled="disabled">{{emotion.label}}</button>
+      {% endif %}
+      <p>
+        게시글 {{emotion.label}} 수 -
+        {{ emotion.count }}
+      </p>
     </div>
-  </div>
+  {% endfor %}
 {% endblock content %}
