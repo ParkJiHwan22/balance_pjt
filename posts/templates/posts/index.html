@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>게시글 보기</h2>
-  
+
+
   <div class="container m-auto">
+    <div class="d-flex justify-content-center">
+      <a href="{% url 'posts:create' %}"><button type="submit" class="btn btn-primary">밸런스 게임 생성</button></a>
+    </div>
+    <br>
     <table class="table table-borderless table-hover">
       <thead>
         <tr class="table-secondary">

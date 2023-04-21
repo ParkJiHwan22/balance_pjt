@@ -4,85 +4,34 @@
 
 {% comment %} {% load static %} {% endcomment %}
 {% block content %}
-
-  <h1> <strong>{{ person.username }}</strong> 의 프로필 페이지</h1>
-  <br>
-
-  <div>
-    팔로잉 : {{ person.followings.all|length }} / 팔로워 : {{ person.followers.all|length }}
-  </div>
-
-  {% if request.user != person %}
-
-  <div class="container mt-3">
-    <h1>{{ person.username }}의 프로필 페이지</h1>
-    <hr>
+  <div class="container">
+    <h1> <strong>{{ person.username }}</strong> 의 프로필 페이지</h1>
+    <br>
 
     <div>
       팔로잉 : {{ person.followings.all|length }} / 팔로워 : {{ person.followers.all|length }}
     </div>
 
-  {% endif %}
-
-  <h3>{{ person.username }}가 작성한 모든 게시글</h3>
-  {% for post in person.posts_set.all %}
-    <div>{{ post.content }}</div>
-  {% endfor %}
-
-  <hr>
-
-  <h3>{{ person.username }}가 작성한 모든 댓글</h3>
-  {% for comment in person.comment_set.all %}
-    <div>{{ comment.content }}</div>
-  {% endfor %}
-
-  <hr>
-  
-  <h3>{{ person.username }}가 좋아요를 누른 모든 게시글</h3>
-  {% for post in person.like_posts.all %}
-    <div>{{ article.title }}</div>
-  {% endfor %}
-
-  <hr>
-  <div class='d-flex content-row'>
-    <div class="me-3">
-      <a href="{% url 'posts:index' %}" class="btn btn-outline-success">뒤로가기</a>
-    </div>
-    
-    <div class="me-3">
-      <a href="{% url 'accounts:update' %}" class="btn btn-outline-primary">회원정보수정</a>
-    </div>
-
-    <div>
-      <form action="{% url 'accounts:delete' %}" method="POST" class="d-flex justify-content-between">
-        {% csrf_token %}
-        <input type="submit" class="btn btn-outline-warning" value="회원탈퇴">
-      </form>
-
     {% if request.user != person %}
+
+    <div class="container mt-3">
+      <h1>{{ person.username }}의 프로필 페이지</h1>
+      <hr>
+
       <div>
-        <form action="{% url 'accounts:follow' person.pk %}" method="POST">
-          {% csrf_token %}
-          {% if request.user in person.followers.all %}
-            <input type="submit" value="언팔로우">
-          {% else %}
-            <input type="submit" value="팔로우">
-          {% endif %}
-        </form>
+        팔로잉 : {{ person.followings.all|length }} / 팔로워 : {{ person.followers.all|length }}
       </div>
     {% endif %}
     <hr>
 
     <h3>{{ person.username }}가 작성한 모든 게시글</h3>
-    <br>
-    {% for post in person.post_set.all %}
-      <div>{{ post.select1_content }} vs {{ post.select2_content }} </div>
+    {% for post in person.posts_set.all %}
+      <div>{{ post.content }}</div>
     {% endfor %}
 
     <hr>
 
     <h3>{{ person.username }}가 작성한 모든 댓글</h3>
-    <br>
     {% for comment in person.comment_set.all %}
       <div>{{ comment.content }}</div>
     {% endfor %}
@@ -90,20 +39,42 @@
     <hr>
     
     <h3>{{ person.username }}가 좋아요를 누른 모든 게시글</h3>
-    <br>
     {% for post in person.like_posts.all %}
       <div>{{ article.title }}</div>
     {% endfor %}
 
     <hr>
-    <div class="d-flex justify-content-between">
-      <a href="{% url 'posts:index' %}" class="btn btn-outline-success">뒤로가기</a>
-      <div class="d-flex justify-content-between">
+    <div class='d-flex content-row'>
+      <div class="me-3">
+        <a href="{% url 'posts:index' %}" class="btn btn-outline-success">뒤로가기</a>
       </div>
+      
+      <div class="me-3">
+        <a href="{% url 'accounts:update' %}" class="btn btn-outline-primary">회원정보수정</a>
+      </div>
+
+      <div>
+        <form action="{% url 'accounts:delete' %}" method="POST" class="d-flex justify-content-between">
+          {% csrf_token %}
+          <input type="submit" class="btn btn-outline-warning" value="회원탈퇴">
+        </form>
+
+      {% if request.user != person %}
+        <div>
+          <form action="{% url 'accounts:follow' person.pk %}" method="POST">
+            {% csrf_token %}
+            {% if request.user in person.followers.all %}
+              <input type="submit" value="언팔로우">
+            {% else %}
+              <input type="submit" value="팔로우">
+            {% endif %}
+          </form>
+        </div>
+      {% endif %}
 
     </div>
   </div>
-  <hr>
+
   
 
 {% endblock content %}
