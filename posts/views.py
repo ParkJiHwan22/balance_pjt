@@ -60,6 +60,9 @@ def detail(request, post_pk):
     comment_post_form = Comment_postForm()
     context = {
         'post': post,
+        'emotions': emotions,
+        'comment_posts': comment_posts,
+        'comment_post_form': comment_post_form,
     }
     return render(request, 'posts/detail.html', context)
 
