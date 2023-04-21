@@ -2,11 +2,17 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Post, Comment_post, Emote_post
 from .forms import PostForm, Comment_postForm
+from django.core.paginator import Paginator
+
 
 def index(request):
     posts = Post.objects.all()
+    page = request.GET.get('page', '1')
+    per_page = 5
+    paginator = Paginator(posts, per_page)
+    page_obj = paginator.get_page(page)
     context = {
-        'posts': posts,
+        'posts': page_obj,
     }
     return render(request, 'posts/index.html', context)
 
