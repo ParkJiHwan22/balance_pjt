@@ -5,6 +5,8 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm, CustomUserChangeForm
+from django.http import JsonResponse
+
 
 # Create your views here.
 def login(request):
@@ -97,20 +99,21 @@ def profile(request, username):
 
 @login_required
 def follow(request, user_pk):
-    # 팔로우를 할 대상이 필요
     User = get_user_model()
     you = User.objects.get(pk=user_pk)
     me = request.user
 
-    # 나 자신은 팔로우 할 수 없음
     if you != me:
-        # 팔로우 or 언팔로우
         if me in you.followers.all():
-            # 언팔로우
             you.followers.remove(me)
-            # me.followings.remove(you)
+            is_followed = False
         else:
-            # 팔로우
             you.followers.add(me)
-            # me.followings.add(you)
+            is_followed = True
+        context = {
+            'is_followed': is_followed,
+            'followings_count': you.followinfs.count(),
+            'followers_count': you.followers.count(),
+        }
+        return JsonResponse(context)
     return redirect('accounts:profile', you.username)
