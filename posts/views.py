@@ -3,7 +3,6 @@ from django.contrib.auth.decorators import login_required
 from .models import Post
 from .forms import PostForm
 
-@login_required
 def index(request):
     posts = Post.objects.all()
     context = {
