@@ -26,21 +26,20 @@
 
     <h3>{{ person.username }}가 작성한 모든 게시글</h3>
     {% for post in person.post_set.all %}
-      <div>{{ post.select1_content }} vs {{ post.select2_content }}</div>
+      <div>{{ post.title }} - {{ post.select1_content }} vs {{ post.select2_content }}</div>
     {% endfor %}
 
     <hr>
 
     <h3>{{ person.username }}가 작성한 모든 댓글</h3>
-    {% for comment_post in person.comment_post_set.all %}
-      <div>{{ comment_post.content }}</div>
-    {% endfor %}
-
+      {% for comment_post in person.comment_post_set.all %}
+        <div>{{ comment_post.content }}</div>
+      {% endfor %}
     <hr>
     
-    <h3>{{ person.username }}가 좋아요를 누른 모든 게시글</h3>
-    {% for post in person.like_post.all %}
-      <div>{{ post.select1_content }} vs {{ post.select2_content }}</div>
+    <h3>{{ person.username }}가 감정표현한 모든 게시글번호</h3>
+    {% for emote_post in person.emote_post_set.all %}
+      <div>{{ emote_post.post_id }} - {{ emote_post.emotion }} </div>
     {% endfor %}
 
     <hr>
@@ -75,6 +74,5 @@
     </div>
   </div>
 
-  
 
 {% endblock content %}
