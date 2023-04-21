@@ -10,6 +10,13 @@
       cursor: pointer;
     }
 
+    .recommend {
+      font-size: 1rem; 
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
   </style>
 {% endblock style %}
 
@@ -87,63 +94,42 @@
     <form action="{% url 'posts:comment_create' post.pk %}" method="post">
         {% csrf_token %}
         {{ comment_post_form.as_p }}
-    <input type="submit" value="댓글 작성">
+        
+    <input type="submit" class="btn btn-outline-primary" value="댓글 작성">
     </form>
   </div>  
   <hr>
 
 {% for comment_post in comment_posts %}
   <div>
-    <p>댓글 작성자 -
-      {{comment_post.user}}</p>
-    <p>댓글 번호 -
-      {{ comment_post.pk }}</p>
+    <h4>{{ comment_post.user.username|slice:":4" }}****</h4>
+    <p>{{ comment_post.created_at }}</p>
+    <p>{{ post.select1_content }} {{ post.select2_content }}</p>
     <p>
-      댓글 내용 -
       {{comment_post.content}}
     </p>
   
+    <div class='d-flex justify-content-end me-3'>
+      <form action="{% url 'posts:comment_likes' post.pk comment_post.pk %}" method="POST">
+        {% csrf_token %}
+        {% if request.user in comment_post.like_users.all %}
+          <input type="submit" class="recommend" value="👍">
+        {% else %}
+          <input type="submit" class="recommend" value="👍">
+        {% endif %}
+        {{ comment_post.like_users.all.count }}
+      </form>
+    </div>
+   
 
-    <form action="{% url 'posts:comment_likes' post.pk comment_post.pk %}" method="POST">
-      {% csrf_token %}
-      {% if request.user in comment_post.like_users.all %}
-        <input type="submit" value="좋아요 취소">
-      {% else %}
-        <input type="submit" value="좋아요">
-      {% endif %}
-    </form>
     {% if comment_post.user == user %}
       <form action="{% url 'posts:comment_delete' post.pk comment_post.pk %}" method="POST">
         {% csrf_token %}
-        <input type="submit" value="댓글 삭제">
+        <input type="submit" class="btn btn-outline-danger" value="댓글 삭제">
       </form>
     {% endif %}
   </div>
   <hr>
 {% endfor %}
 
-{% comment %} 
-<div class="d-flex flex-row justify-content-center">
-  {% for emotion in emotions %}
-    <div class='text-center mx-5'>
-      {% if request.user.is_authenticated %}
-      {{emotion.queryset}}
-        <form action="{% url 'posts:emotes' post.pk emotion.value %}" method="POST">
-          {% csrf_token %}
-          {% if emotion.exist %}
-            <input type="submit" class="emoji" value="{{emotion.label}}">
-          {% else %}
-            <input type="submit" class="emoji" value="{{emotion.label}}">
-          {% endif %}
-        </form>
-      {% else %}
-        <button disabled="disabled">{{emotion.label}}</button>
-      {% endif %}
-      <p>
-        {{ emotion.count }}
-      </p>
-    </div>
-    {% endfor %}
-  {% endblock content %}
-</div> {% endcomment %}
 {% endblock content %}
