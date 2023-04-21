@@ -39,7 +39,7 @@
     
     <h3>{{ person.username }}가 감정표현한 모든 게시글번호</h3>
     {% for emote_post in person.emote_post_set.all %}
-      <div>{{ emote_post.post_id }} - {{ emote_post.emotion }} </div>
+      <div>{{ emote_post.post_id }}</div>
     {% endfor %}
 
     <hr>
@@ -73,6 +73,7 @@
 
     </div>
   </div>
+
 
 
 {% endblock content %}
