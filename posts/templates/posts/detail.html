@@ -43,6 +43,38 @@
           </form>
         </div>  
       </div>
+    <form action="{% url 'articles:comment_create' article.pk %}" method="post">
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+      <input type="submit" value="댓글 작성">
+    </form>
+    {% for comment in comments %}
+    <div>
+      <p>댓글 작성자 -
+        {{comment.user}}</p>
+      <p>댓글 번호 -
+        {{ comment.pk }}</p>
+      <p>
+        댓글 내용 -
+        {{comment.content}}
+      </p>
+      <form action="{% url 'articles:comment_likes' article.pk comment.pk %}" method="POST">
+        {% csrf_token %}
+        {% if request.user in comment.like_users.all %}
+          <input type="submit" value="좋아요 취소">
+        {% else %}
+          <input type="submit" value="좋아요">
+        {% endif %}
+      </form>
+      {% if comment.user == user %}
+        <form action="{% url 'articles:comment_delete' article.pk comment.pk %}" method="POST">
+          {% csrf_token %}
+          <input type="submit" value="댓글 삭제">
+        </form>
+      {% endif %}
+    </div>
+    <hr>
+  {% endfor %}
     </div>      
 
     
