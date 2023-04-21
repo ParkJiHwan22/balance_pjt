@@ -32,8 +32,8 @@
     <hr>
 
     <h3>{{ person.username }}가 작성한 모든 댓글</h3>
-    {% for comment in person.comment_posts_set.all %}
-      <div>{{ comment_posts.content }}</div>
+    {% for comment_post in person.comment_post_set.all %}
+      <div>{{ comment_post.content }}</div>
     {% endfor %}
 
     <hr>
