@@ -25,26 +25,26 @@
     <hr>
 
     <h3>{{ person.username }}가 작성한 모든 게시글</h3>
-    {% for post in person.posts_set.all %}
-      <div>{{ post.content }}</div>
+    {% for post in person.post_set.all %}
+      <div>{{ post.select1_content }} vs {{ post.select2_content }}</div>
     {% endfor %}
 
     <hr>
 
     <h3>{{ person.username }}가 작성한 모든 댓글</h3>
-    {% for comment in person.comment_set.all %}
-      <div>{{ comment.content }}</div>
+    {% for comment_post in person.comment_post_set.all %}
+      <div>{{ comment_post.content }}</div>
     {% endfor %}
 
     <hr>
     
     <h3>{{ person.username }}가 좋아요를 누른 모든 게시글</h3>
-    {% for post in person.like_posts.all %}
-      <div>{{ article.title }}</div>
+    {% for post in person.like_post.all %}
+      <div>{{ post.select1_content }} vs {{ post.select2_content }}</div>
     {% endfor %}
 
     <hr>
-    <div class='d-flex content-row'>
+    <div class='d-flex content-row '>
       <div class="me-3">
         <a href="{% url 'posts:index' %}" class="btn btn-outline-success">뒤로가기</a>
       </div>
