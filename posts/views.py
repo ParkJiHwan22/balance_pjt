@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Post
-from .forms import PostForm
+from .models import Post, Comment_post, Emote_post
+from .forms import PostForm, Commen_postForm
 
 def index(request):
     posts = Post.objects.all()
@@ -9,6 +9,12 @@ def index(request):
         'posts': posts,
     }
     return render(request, 'posts/index.html', context)
+
+EMOTIONS = [
+    {'label': '재밌어요', 'value': 1},
+    {'label': '싫어요', 'value': 2},
+    {'label': '화나요', 'value': 3},
+]
 
 
 @login_required
@@ -33,6 +39,25 @@ def create(request):
 @login_required
 def detail(request, post_pk):
     post = Post.objects.get(pk=post_pk)
+    emotions = []
+    for emotion in EMOTIONS:
+        label = emotion['label']
+        value = emotion['value']
+        count = Emote.objects.filter(post=post, emotion=value).count()
+        if request.user.is_authenticated:
+            exist = Emote.objects.filter(post=post, emotion=value, user=request.user)
+        else:
+            exist = None
+        emotions.append(
+            {
+                'label': label,
+                'value': value,
+                'count': count,
+                'exist': exist,
+            }
+        )
+    comment_posts = post.comment_post_set.all()
+    comment_post_form = Comment_postForm()
     context = {
         'post': post,
     }
@@ -57,7 +82,7 @@ def answer(request, post_pk, answer):
 def comment_create(request, post_pk):
     post = Post.objects.get(pk=post_pk)
     comment_post_form = Comment_postForm(request.POST)
-    if comment_form.is_valid():
+    if comment_post_form.is_valid():
         comment_post = comment_post_form.save(commit=False)
         comment_post.user = request.user
         comment_post.post = post
@@ -96,7 +121,7 @@ def emotes(request, post_pk, emotion):
     if filter_query.exists():
         filter_query.delete()
     else:
-        Emote.objects.create(post=post, user=request.user, emotion=emotion)
+        Emote_post.objects.create(post=post, user=request.user, emotion=emotion)
 
     return redirect('posts:detail', post_pk)
 
